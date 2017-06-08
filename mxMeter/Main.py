@@ -5,7 +5,28 @@ from Ribbon import mxRibbon
 API_VERSION = 'API_v1.0'
 MOD_NAME = 'mxMeter'
 
+"""
+https://forum.worldofwarships.ru/topic/68750-изменения-экономики-до-и-после-0512/
 
+Учитываются:
+Урон ГК, ПМК, Торпед и Бомб
+Сбитые самолёты
+Фраги
+
+Не учитываются:
+Пожары
+Затопления
+Разность в уровнях кораблей
+Восстановление хилкой (реально ПУК будет меньше)
+Потенциальный урон
+Обнаружение
+Урон по засвету
+Нелинейнось роста награды
+Участие в захвате точек
+Пониженный захват в режиме Эпицентр
+Защита точек
+Блокировка точек
+"""
 class mxMeter:
     SHOW_PUK_INDICATOR = "mxMeter.showPukIndicator"
     UPDATE_PUK_INDICATOR = "mxMeter.updatePukIndicator"
