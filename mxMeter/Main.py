@@ -37,30 +37,24 @@ class mxMeter:
     NO_PUK = u"0 pt"
 
     def __init__(self):
-        self.initState(battle_end=True)
+        self.initState()
         self.setupEvents()
 
-    def initState(self, battle_start=False, battle_end=False):
+    def initState(self, battle_start=False):
+        self.puk_total = 0.0
+        self.players_health = {}
         if battle_start:
-            self.in_battle = True
-            self.puk_total = 0.0
-            self.players_health = {}
             players_info_collection = battle.getPlayersInfo()
             for playerId in players_info_collection:
                 player_info = players_info_collection[playerId]
                 self.players_health[player_info.shipId] = player_info.maxHealth
-            self.ribbons = {}
-        if battle_end:
-            self.in_battle = False
-            self.puk_total = 0.0
-            self.players_health = None
-            self.ribbons = {}
 
     def setupEvents(self):
         # events.onReceiveShellInfo(self.onReceiveShellInfo)
         events.onGotRibbon(self.onGotRibbon)
         events.onBattleStart(self.onBattleStart)
         events.onBattleQuit(self.onBattleQuit)
+        events.onSFMEvent(self.onSFMEvent)
 
     def onReceiveShellInfo(self
             ,victimID # - идентификатор атакованного
@@ -82,11 +76,6 @@ class mxMeter:
 
     def onGotRibbon(self, ribbon_id):
         print "mxMeter onGotRibbon", ribbon_id
-        if ribbon_id in self.ribbons:
-            self.ribbons[ribbon_id] += 1
-        else:
-            self.ribbons[ribbon_id] = 1
-        print "mxMeter self.ribbons", self.ribbons
         ribbon = mxRibbon(ribbon_id)
         puk = ribbon.getPuk()
         self.addPuk(puk)
@@ -104,8 +93,15 @@ class mxMeter:
 
     def onBattleQuit(self, arg):
         print "mxMeter: in_battle False"
-        self.initState(battle_end=True)
         flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
 
+    def onSFMEvent(self, eventName, eventData):
+        if eventName == 'window.show' and eventData['windowName'] == 'PostBattle':
+            if self.puk_total > 0:
+                flash.call(mxMeter.SHOW_PUK_INDICATOR, [mxMeter.PUK_FORMAT % self.puk_total])
+            else:
+                flash.call(mxMeter.SHOW_PUK_INDICATOR, [mxMeter.NO_PUK])
+        elif eventName == 'window.hide' and eventData['windowName'] == 'PostBattle':
+            flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
 
 g_mxMeter = mxMeter()
