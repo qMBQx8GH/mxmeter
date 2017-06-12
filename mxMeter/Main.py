@@ -33,8 +33,8 @@ class mxMeter:
     UPDATE_PUK_INDICATOR = "mxMeter.updatePukIndicator"
     HIDE_PUK_INDICATOR = "mxMeter.hidePukIndicator"
 
-    PUK_FORMAT = u"%0.2fПУК"
-    NO_PUK = u"-"
+    PUK_FORMAT = u"%d pt"
+    NO_PUK = u"0 pt"
 
     def __init__(self):
         self.initState(battle_end=True)
@@ -57,7 +57,7 @@ class mxMeter:
             self.ribbons = {}
 
     def setupEvents(self):
-        events.onReceiveShellInfo(self.onReceiveShellInfo)
+        # events.onReceiveShellInfo(self.onReceiveShellInfo)
         events.onGotRibbon(self.onGotRibbon)
         events.onBattleStart(self.onBattleStart)
         events.onBattleQuit(self.onBattleQuit)

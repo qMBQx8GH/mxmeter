@@ -50,9 +50,11 @@ class mxRibbon:
             self._type = mxRibbon.RIBBON_UNKNOWN
 
     _puk_map = {
-        RIBBON_FRAG: 1.0/5.0,
-        RIBBON_PLANE: 1.0/30.0,
-        RIBBON_BASE_CAPTURE: 1.0/3.0
+        RIBBON_FRAG: 3,
+        RIBBON_BURN: 0.5,
+        RIBBON_FLOOD: 1,
+        RIBBON_CITADEL: 1,
+        RIBBON_PLANE: 1,
     }
 
     def getPuk(self):
