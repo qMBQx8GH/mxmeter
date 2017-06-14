@@ -15,6 +15,7 @@
 		public function mxMeter() 
 		{
 			super();
+			this._puk_indicator = null;
 		}
 		
 		override public function init():void 
@@ -31,14 +32,26 @@
 			super.fini();
 		}
 
-		private function onShowPukIndicator(label:String):void
+		private function onShowPukIndicator(x:int, y:int, label:String):void
 		{
+			if (this._puk_indicator) {
+				gameAPI.stage.removeChild(this._puk_indicator);
+				this._puk_indicator = null;
+			}
 			this._puk_indicator = new TextField;
 			this._puk_indicator.defaultTextFormat = new TextFormat("$WWSDefaultFont", 18, 0xfefefe);
 			this._puk_indicator.text = label;
 			this._puk_indicator.width = 165;
-			this._puk_indicator.x = gameAPI.stage.width - this._puk_indicator.width;
-			this._puk_indicator.y = 0;
+			if (x >= 0) {
+				this._puk_indicator.x = x
+			} else {
+				this._puk_indicator.x = gameAPI.stage.width + x;
+			}
+			if (y >= 0) {
+				this._puk_indicator.y = y;
+			} else {
+				this._puk_indicator.y = gameAPI.stage.height + y
+			}
 			gameAPI.stage.addChild(this._puk_indicator);
 		}
 
@@ -49,8 +62,7 @@
 
 		private function onHidePukIndicator():void
 		{
-			if (this._puk_indicator)
-			{
+			if (this._puk_indicator) {
 				gameAPI.stage.removeChild(this._puk_indicator);
 				this._puk_indicator = null;
 			}
