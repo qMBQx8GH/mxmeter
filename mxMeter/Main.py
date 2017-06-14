@@ -89,7 +89,7 @@ class mxMeter:
     def onBattleStart(self):
         print "mxMeter: in_battle True"
         self.initState(battle_start=True)
-        flash.call(mxMeter.SHOW_PUK_INDICATOR, [-165, 0, mxMeter.NO_PUK])
+        flash.call(mxMeter.SHOW_PUK_INDICATOR, [-280, 0, mxMeter.NO_PUK])
 
     def onBattleQuit(self, arg):
         print "mxMeter: in_battle False"
