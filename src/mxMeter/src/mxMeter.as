@@ -1,5 +1,7 @@
 ﻿package 
 {
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormatAlign;
 	import lesta.api.GameAPI;
 	import lesta.api.ModBase;
 	import flash.text.TextField;
@@ -39,9 +41,13 @@
 				this._puk_indicator = null;
 			}
 			this._puk_indicator = new TextField;
+			this._puk_indicator.autoSize = TextFieldAutoSize.LEFT;
 			this._puk_indicator.defaultTextFormat = new TextFormat("$WWSDefaultFont", 18, 0xfefefe);
+			//this._puk_indicator.defaultTextFormat.align = TextFormatAlign.RIGHT
 			this._puk_indicator.text = label;
-			this._puk_indicator.width = 165;
+			this._puk_indicator.width = 75;
+			//this._puk_indicator.border = true;
+			//this._puk_indicator.borderColor = 0xff0000;
 			if (x >= 0) {
 				this._puk_indicator.x = x
 			} else {
