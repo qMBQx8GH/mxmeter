@@ -13,11 +13,13 @@
 		private static const UPDATE_PUK_INDICATOR:String = "mxMeter.updatePukIndicator";
 		private static const HIDE_PUK_INDICATOR:String = "mxMeter.hidePukIndicator";
 		private var _puk_indicator:TextField;
+		private var _visibility_counter:int;
 		
 		public function mxMeter() 
 		{
 			super();
 			this._puk_indicator = null;
+			this._visibility_counter = 0;
 		}
 		
 		override public function init():void 
@@ -36,6 +38,7 @@
 
 		private function onShowPukIndicator(x:int, y:int, label:String):void
 		{
+			this._visibility_counter++;
 			if (this._puk_indicator) {
 				gameAPI.stage.removeChild(this._puk_indicator);
 				this._puk_indicator = null;
@@ -68,7 +71,8 @@
 
 		private function onHidePukIndicator():void
 		{
-			if (this._puk_indicator) {
+			this._visibility_counter--;
+			if (this._puk_indicator && (this._visibility_counter == 0)) {
 				gameAPI.stage.removeChild(this._puk_indicator);
 				this._puk_indicator = null;
 			}

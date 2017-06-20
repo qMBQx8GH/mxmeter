@@ -70,39 +70,40 @@ class mxMeter:
             ,**kwargs
     ):
         if (booleans & 1) == 0 and victimID in self.players_health:
-            print "mxMeter shell_hit ", victimID, ammoId, damage
+            #print "mxMeter shell_hit ", victimID, ammoId, damage
             puk = float(damage) / float(self.players_health[victimID])
             self.addPuk(puk)
 
     def onGotRibbon(self, ribbon_id):
-        print "mxMeter onGotRibbon", ribbon_id
+        #print "mxMeter onGotRibbon", ribbon_id
         ribbon = mxRibbon(ribbon_id)
         puk = ribbon.getPuk()
         self.addPuk(puk)
 
     def addPuk(self, puk):
         self.puk_total += puk
-        print "mxMeter puk_total ", self.puk_total
+        #print "mxMeter puk_total ", self.puk_total
         if puk > 0:
             flash.call(mxMeter.UPDATE_PUK_INDICATOR, [mxMeter.PUK_FORMAT % self.puk_total])
 
     def onBattleStart(self):
-        print "mxMeter: in_battle True"
         self.initState(battle_start=True)
+        print "mxMeter: onBattleStart SHOW_PUK_INDICATOR"
         flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.NO_PUK])
 
     def onBattleQuit(self, arg):
-        print "mxMeter: in_battle False"
+        print "mxMeter: onBattleQuit HIDE_PUK_INDICATOR"
         flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
 
     def onSFMEvent(self, eventName, eventData):
         if eventName == 'window.show' and eventData['windowName'] == 'PostBattle':
-            flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
+            print "mxMeter: onSFMEvent SHOW_PUK_INDICATOR"
             if self.puk_total > 0:
-                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-105, 28, mxMeter.PUK_FORMAT % self.puk_total])
+                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.PUK_FORMAT % self.puk_total])
             else:
-                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-105, 28, mxMeter.NO_PUK])
+                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.NO_PUK])
         elif eventName == 'window.hide' and eventData['windowName'] == 'PostBattle':
+            print "mxMeter: onSFMEvent HIDE_PUK_INDICATOR"
             flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
 
 g_mxMeter = mxMeter()
