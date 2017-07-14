@@ -1,1 +1,3 @@
+glob:*.old
 .idea/
+dist/
