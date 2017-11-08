@@ -88,22 +88,22 @@ class mxMeter:
 
     def onBattleStart(self):
         self.initState(battle_start=True)
-        print "mxMeter: onBattleStart SHOW_PUK_INDICATOR"
+        #print "mxMeter: onBattleStart SHOW_PUK_INDICATOR"
         flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.NO_PUK])
 
     def onBattleQuit(self, arg):
-        print "mxMeter: onBattleQuit HIDE_PUK_INDICATOR"
+        #print "mxMeter: onBattleQuit HIDE_PUK_INDICATOR"
         flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
 
     def onSFMEvent(self, eventName, eventData):
         if eventName == 'window.show' and eventData['windowName'] == 'PostBattle':
-            print "mxMeter: onSFMEvent SHOW_PUK_INDICATOR"
+            #print "mxMeter: onSFMEvent SHOW_PUK_INDICATOR"
             if self.puk_total > 0:
                 flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.PUK_FORMAT % self.puk_total])
             else:
                 flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.NO_PUK])
         elif eventName == 'window.hide' and eventData['windowName'] == 'PostBattle':
-            print "mxMeter: onSFMEvent HIDE_PUK_INDICATOR"
+            #print "mxMeter: onSFMEvent HIDE_PUK_INDICATOR"
             flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
 
 g_mxMeter = mxMeter()
