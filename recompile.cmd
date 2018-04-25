@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\FlashDevelop\Tools\fdbuild\fdbuild.exe" "src\mxMeter\mxMeter.as3proj" -version "4.6.0; 3.1" -compiler "C:\src\flex_sdk_4.6" -library "C:\Program Files (x86)\FlashDevelop\Library"
