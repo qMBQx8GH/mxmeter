@@ -22,7 +22,7 @@ for path in xml.iter('Path'):
 print('res_mods: {}'.format(res_mods))
 
 if version != res_mods:
-    subprocess.run(['hg', 'merge', 'default'])
+    subprocess.run(['hg', 'merge', 'default', '--tool', 'internal:other'])
     subprocess.run(['hg', 'com', '-v', '-m', 'merge'])
 
     f = open('version.txt', 'w')
