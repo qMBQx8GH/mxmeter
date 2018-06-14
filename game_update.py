@@ -22,13 +22,21 @@ for path in xml.iter('Path'):
 print('res_mods: {}'.format(res_mods))
 
 if version != res_mods:
-    subprocess.run(['hg', 'merge', 'default', '--tool', 'internal:other'])
-    subprocess.run(['hg', 'com', '-v', '-m', 'merge'])
+    res = subprocess.run(['hg', 'merge', 'default', '--tool', 'internal:other'], stderr=subprocess.PIPE)
+
+    if res.returncode == 0:
+        res = subprocess.run(['hg', 'com', '-v', '-m', 'merge'])
+        if res.returncode != 0:
+          exit(res.returncode)
+    elif res.stderr.decode().startswith('abort: merging with a working directory ancestor has no effect'):
+        pass
+    else:
+        print(res.stderr.decode())
+        exit(res.returncode)
 
     f = open('version.txt', 'w')
     f.write(res_mods)
     f.close()
     subprocess.run(['hg', 'com', '-v', '-m', res_mods, 'version.txt'])
-    subprocess.run(['hg', 'tag', res_mods])
     
 subprocess.run(['hg', 'update', 'default'])
