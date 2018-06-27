@@ -13,6 +13,7 @@ https://forum.worldofwarships.ru/topic/68750-изменения-экономик
 Сбитые самолёты = 1/30
 Фраги = 1/5
 Захват точки = 1/3
+Обнаружение = 1/120
 
 Не учитываются:
 Пожары
@@ -20,7 +21,6 @@ https://forum.worldofwarships.ru/topic/68750-изменения-экономик
 Разность в уровнях кораблей
 Восстановление хилкой (реально ПУК будет меньше)
 Потенциальный урон
-Обнаружение
 Урон по засвету
 Нелинейнось роста награды
 Участие в захвате точек
@@ -37,6 +37,8 @@ class mxMeter:
     NO_PUK = u"-"
 
     def __init__(self):
+        self.battle_started = False
+        self.post_battle_results = False
         self.initState()
         self.setupEvents()
 
@@ -48,6 +50,15 @@ class mxMeter:
             for playerId in players_info_collection:
                 player_info = players_info_collection[playerId]
                 self.players_health[player_info.shipId] = player_info.maxHealth
+
+    def changeState(self):
+        if self.battle_started or self.post_battle_results:
+            if self.puk_total > 0:
+                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.PUK_FORMAT % self.puk_total])
+            else:
+                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.NO_PUK])
+        else:
+            flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
 
     def setupEvents(self):
         events.onReceiveShellInfo(self.onReceiveShellInfo)
@@ -87,23 +98,24 @@ class mxMeter:
             flash.call(mxMeter.UPDATE_PUK_INDICATOR, [mxMeter.PUK_FORMAT % self.puk_total])
 
     def onBattleStart(self):
+        print "mxMeter: onBattleStart SHOW_PUK_INDICATOR"
         self.initState(battle_start=True)
-        #print "mxMeter: onBattleStart SHOW_PUK_INDICATOR"
-        flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.NO_PUK])
+        self.battle_started = True
+        self.changeState()
 
     def onBattleQuit(self, arg):
-        #print "mxMeter: onBattleQuit HIDE_PUK_INDICATOR"
-        flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
+        print "mxMeter: onBattleQuit HIDE_PUK_INDICATOR"
+        self.battle_started = False
+        self.changeState()
 
     def onSFMEvent(self, eventName, eventData):
         if eventName == 'window.show' and eventData['windowName'] == 'PostBattle':
-            #print "mxMeter: onSFMEvent SHOW_PUK_INDICATOR"
-            if self.puk_total > 0:
-                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.PUK_FORMAT % self.puk_total])
-            else:
-                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.NO_PUK])
+            print "mxMeter: onSFMEvent SHOW_PUK_INDICATOR"
+            self.post_battle_results = True
+            self.changeState()
         elif eventName == 'window.hide' and eventData['windowName'] == 'PostBattle':
-            #print "mxMeter: onSFMEvent HIDE_PUK_INDICATOR"
-            flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
+            print "mxMeter: onSFMEvent HIDE_PUK_INDICATOR"
+            self.post_battle_results = False
+            self.changeState()
 
 g_mxMeter = mxMeter()
