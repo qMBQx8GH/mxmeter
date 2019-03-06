@@ -1,7 +1,10 @@
 import subprocess
 import xml.etree.ElementTree as ET
+import configparser
 
-path_to_game = 'C:\\Games\\World_of_Warships'
+config = configparser.ConfigParser()
+config.read('build.ini')
+path_to_game = config['Game']['folder']
 
 res = subprocess.run(['hg', 'update', 'release'])
 if res.returncode != 0:
