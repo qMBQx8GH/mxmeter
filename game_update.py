@@ -1,3 +1,4 @@
+import os
 import subprocess
 import xml.etree.ElementTree as ET
 import configparser
@@ -16,12 +17,12 @@ f.close()
 print('version: {}'.format(version))
 
 res_mods = ''
-f = open(path_to_game + '\\paths.xml', 'r')
+f = open(path_to_game + '\\bin64\\paths.xml', 'r')
 xml = ET.fromstring(f.read())
 f.close()
 for path in xml.iter('Path'):
-    if path.text.startswith('res_mods'):
-        res_mods = path.text[9:]
+    if 'res_mods' in path.text:
+        res_mods = os.path.basename(path.text)
 print('res_mods: {}'.format(res_mods))
 
 if version != res_mods:
