@@ -17,12 +17,11 @@ f.close()
 print('version: {}'.format(version))
 
 res_mods = ''
-f = open(path_to_game + '\\bin64\\paths.xml', 'r')
+f = open(path_to_game + '\\game_info.xml', 'r')
 xml = ET.fromstring(f.read())
 f.close()
-for path in xml.iter('Path'):
-    if 'res_mods' in path.text:
-        res_mods = os.path.basename(path.text)
+for vers in xml.iter('version_name'):
+    res_mods = ".".join(vers.text.split(".")[0:4])
 print('res_mods: {}'.format(res_mods))
 
 if version != res_mods:
