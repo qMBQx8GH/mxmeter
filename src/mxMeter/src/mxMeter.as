@@ -34,7 +34,7 @@
 			super.fini();
 		}
 
-		private function onShowPukIndicator(x:int, y:int, label:String):void
+		private function onShowPukIndicator(x:int, y:int, font_size:int, width:int, label:String):void
 		{
 			if (this._puk_indicator) {
 				gameAPI.stage.removeChild(this._puk_indicator);
@@ -42,10 +42,10 @@
 			}
 			this._puk_indicator = new TextField;
 			this._puk_indicator.autoSize = TextFieldAutoSize.LEFT;
-			this._puk_indicator.defaultTextFormat = new TextFormat("$WWSDefaultFont", 18, 0xfefefe);
+			this._puk_indicator.defaultTextFormat = new TextFormat("$WWSDefaultFont", font_size, 0xfefefe);
 			//this._puk_indicator.defaultTextFormat.align = TextFormatAlign.RIGHT
 			this._puk_indicator.text = label;
-			this._puk_indicator.width = 75;
+			this._puk_indicator.width = width;
 			//this._puk_indicator.border = true;
 			//this._puk_indicator.borderColor = 0xff0000;
 			if (x >= 0) {

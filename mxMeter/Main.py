@@ -53,10 +53,15 @@ class mxMeter:
 
     def changeState(self):
         if self.battle_started or self.post_battle_results:
+            interface_scale = self.getInterfaceScale()
+            x = int(-170 * interface_scale)
+            y = int(0 * interface_scale)
+            font_size = int(18 * interface_scale)
+            width = int(75 * interface_scale)
             if self.puk_total > 0:
-                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.PUK_FORMAT % self.puk_total])
+                flash.call(mxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, width, mxMeter.PUK_FORMAT % self.puk_total])
             else:
-                flash.call(mxMeter.SHOW_PUK_INDICATOR, [-170, 0, mxMeter.NO_PUK])
+                flash.call(mxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, width, mxMeter.NO_PUK])
         else:
             flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
 
@@ -117,5 +122,28 @@ class mxMeter:
             print "mxMeter: onSFMEvent HIDE_PUK_INDICATOR"
             self.post_battle_results = False
             self.changeState()
+
+    def xmlCut(self, str, tag):
+        result = ''
+        open_tag_start = str.find('<' + tag)
+        if open_tag_start >= 0:
+            open_tag_end = str.find('>', open_tag_start)
+            if open_tag_end >= 0:
+                end_tag_start = str.find('</' + tag, open_tag_end)
+                if end_tag_start >= 0:
+                    result = str[open_tag_end + 1:end_tag_start]
+        return result
+
+    def getInterfaceScale(self):
+        interface_scale = 1.0
+        with open(utils.getModDir() + '\\..\\..\\..\\..\\preferences.xml', 'r') as prefsFile:
+            prefsData = prefsFile.read()
+            interface_scale_str = self.xmlCut(prefsData, 'interfaceScale').strip()
+            if interface_scale_str:
+                try:
+                    interface_scale = float(interface_scale_str)
+                except ValueError:
+                    pass
+        return interface_scale
 
 g_mxMeter = mxMeter()
