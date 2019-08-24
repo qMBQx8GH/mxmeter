@@ -1,6 +1,6 @@
 
 
-class mxRibbon:
+class MxRibbon:
     RIBBON_UNKNOWN = "UNKNOWN"
 
     RIBBON_MAIN_CALIBER = "RIBBON_MAIN_CALIBER"
@@ -70,10 +70,10 @@ class mxRibbon:
     }
 
     def __init__(self, ribbon_id):
-        if ribbon_id in mxRibbon._type_map:
-            self._type = mxRibbon._type_map[ribbon_id]
+        if ribbon_id in MxRibbon._type_map:
+            self._type = MxRibbon._type_map[ribbon_id]
         else:
-            self._type = mxRibbon.RIBBON_UNKNOWN
+            self._type = MxRibbon.RIBBON_UNKNOWN
 
     _puk_map = {
         RIBBON_FRAG: 1.0/5.0,
@@ -83,7 +83,7 @@ class mxRibbon:
     }
 
     def getPuk(self):
-        if self._type in mxRibbon._puk_map:
-            return mxRibbon._puk_map[self._type]
+        if self._type in MxRibbon._puk_map:
+            return MxRibbon._puk_map[self._type]
         else:
             return 0.0

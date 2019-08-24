@@ -1,6 +1,6 @@
 # coding=utf-8
-#from API_v_1_0 import *
-from Ribbon import mxRibbon
+# from API_v_1_0 import *
+from Ribbon import MxRibbon
 import ini
 
 API_VERSION = 'API_v1.0'
@@ -29,7 +29,9 @@ https://forum.worldofwarships.ru/topic/68750-изменения-экономик
 Защита точек
 Блокировка точек
 """
-class mxMeter:
+
+
+class MxMeter:
     SHOW_PUK_INDICATOR = "mxMeter.showPukIndicator"
     UPDATE_PUK_INDICATOR = "mxMeter.updatePukIndicator"
     HIDE_PUK_INDICATOR = "mxMeter.hidePukIndicator"
@@ -40,10 +42,12 @@ class mxMeter:
     def __init__(self):
         self.battle_started = False
         self.post_battle_results = False
-        self.initState()
-        self.setupEvents()
+        self.puk_total = 0.0
+        self.players_health = {}
+        self.init_state()
+        self.setup_events()
 
-    def initState(self, battle_start=False):
+    def init_state(self, battle_start=False):
         self.puk_total = 0.0
         self.players_health = {}
         if battle_start:
@@ -52,94 +56,92 @@ class mxMeter:
                 player_info = players_info_collection[playerId]
                 self.players_health[player_info.shipId] = player_info.maxHealth
 
-    def changeState(self):
+    def change_state(self):
         if self.battle_started or self.post_battle_results:
-            interface_scale = self.getInterfaceScale()
-            x = int(-170 * interface_scale)
-            y = int(0 * interface_scale)
-            font_size = int(18 * interface_scale)
-            width = int(75 * interface_scale)
+            interface_scale = self.get_interface_scale()
+            x = int(round(-170 * interface_scale))
+            y = int(round(0 * interface_scale))
+            font_size = int(round(18 * interface_scale))
+            width = int(round(75 * interface_scale))
             if self.puk_total > 0:
-                flash.call(mxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, width, mxMeter.PUK_FORMAT % self.puk_total])
+                flash.call(MxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, width, MxMeter.PUK_FORMAT % self.puk_total])
             else:
-                flash.call(mxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, width, mxMeter.NO_PUK])
+                flash.call(MxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, width, MxMeter.NO_PUK])
         else:
-            flash.call(mxMeter.HIDE_PUK_INDICATOR, [])
+            flash.call(MxMeter.HIDE_PUK_INDICATOR, [])
 
-    def setupEvents(self):
-        events.onReceiveShellInfo(self.onReceiveShellInfo)
-        events.onGotRibbon(self.onGotRibbon)
-        events.onBattleStart(self.onBattleStart)
-        events.onBattleQuit(self.onBattleQuit)
-        events.onSFMEvent(self.onSFMEvent)
+    def setup_events(self):
+        events.onReceiveShellInfo(self.on_receive_shell_info)
+        events.onGotRibbon(self.on_got_ribbon)
+        events.onBattleStart(self.on_battle_start)
+        events.onBattleQuit(self.on_battle_quit)
+        events.onSFMEvent(self.on_sfm_event)
 
-    def onReceiveShellInfo(self
-            ,victimID # - идентификатор атакованного
-            ,shooterID # - идентификатор атакующего
-            ,ammoId # - тип снаряда
-            ,matId # - тип материала, в который было попадание
-            ,shotID # - идентификатор выстрела
-            ,booleans # - if(booleans & 1) урон получил наш корабль
-            ,damage # - кол-во нанесенного урона
-            ,shotPosition # - точка попадания
-            ,yaw # - yaw снаряда
-            ,*args
-            ,**kwargs
-    ):
-        if (booleans & 1) == 0 and victimID in self.players_health:
-            #print "mxMeter shell_hit ", victimID, ammoId, damage
-            puk = float(damage) / float(self.players_health[victimID])
-            self.addPuk(puk)
+    def on_receive_shell_info(self, victim_id, shooter_id, ammo_id, mat_id, shot_id, booleans, damage, shot_position, yaw, *args, **kwargs):
+        """
 
-    def onGotRibbon(self, ribbon_id):
-        #print "mxMeter onGotRibbon", ribbon_id
-        ribbon = mxRibbon(ribbon_id)
+        :param victim_id: идентификатор атакованного
+        :param shooter_id: идентификатор атакующего
+        :param ammo_id: тип снаряда
+        :param mat_id: тип материала, в который было попадание
+        :param shot_id: идентификатор выстрела
+        :param booleans: if(booleans & 1) урон получил наш корабль
+        :param damage: кол-во нанесенного урона
+        :param shot_position:  точка попадания
+        :param yaw: yaw снаряда
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        if (booleans & 1) == 0 and victim_id in self.players_health:
+            puk = float(damage) / float(self.players_health[victim_id])
+            self.add_puk(puk)
+
+    def on_got_ribbon(self, ribbon_id):
+        ribbon = MxRibbon(ribbon_id)
         puk = ribbon.getPuk()
-        self.addPuk(puk)
+        self.add_puk(puk)
 
-    def addPuk(self, puk):
+    def add_puk(self, puk):
         self.puk_total += puk
-        #print "mxMeter puk_total ", self.puk_total
         if puk > 0:
-            flash.call(mxMeter.UPDATE_PUK_INDICATOR, [mxMeter.PUK_FORMAT % self.puk_total])
+            flash.call(MxMeter.UPDATE_PUK_INDICATOR, [MxMeter.PUK_FORMAT % self.puk_total])
 
-    def onBattleStart(self):
-        print "mxMeter: onBattleStart SHOW_PUK_INDICATOR"
-        self.initState(battle_start=True)
+    def on_battle_start(self):
+        self.init_state(battle_start=True)
         self.battle_started = True
-        self.changeState()
+        self.change_state()
 
-    def onBattleQuit(self, arg):
-        print "mxMeter: onBattleQuit HIDE_PUK_INDICATOR"
+    def on_battle_quit(self, arg):
         self.battle_started = False
-        self.changeState()
+        self.change_state()
 
-    def onSFMEvent(self, eventName, eventData):
-        if eventName == 'window.show' and eventData['windowName'] == 'PostBattle':
+    def on_sfm_event(self, event_name, event_data):
+        if event_name == 'window.show' and event_data['windowName'] == 'PostBattle':
             print "mxMeter: onSFMEvent SHOW_PUK_INDICATOR"
             self.post_battle_results = True
-            self.changeState()
-        elif eventName == 'window.hide' and eventData['windowName'] == 'PostBattle':
+            self.change_state()
+        elif event_name == 'window.hide' and event_data['windowName'] == 'PostBattle':
             print "mxMeter: onSFMEvent HIDE_PUK_INDICATOR"
             self.post_battle_results = False
-            self.changeState()
+            self.change_state()
 
-    def xmlCut(self, str, tag):
+    def xml_cut(self, xml_string, tag):
         result = ''
-        open_tag_start = str.find('<' + tag)
+        open_tag_start = xml_string.find('<' + tag)
         if open_tag_start >= 0:
-            open_tag_end = str.find('>', open_tag_start)
+            open_tag_end = xml_string.find('>', open_tag_start)
             if open_tag_end >= 0:
-                end_tag_start = str.find('</' + tag, open_tag_end)
+                end_tag_start = xml_string.find('</' + tag, open_tag_end)
                 if end_tag_start >= 0:
-                    result = str[open_tag_end + 1:end_tag_start]
+                    result = xml_string[open_tag_end + 1:end_tag_start]
         return result
 
-    def getInterfaceScale(self):
+    def get_interface_scale(self):
         interface_scale = 1.0
         with open(utils.getModDir() + '\\..\\..\\..\\..\\preferences.xml', 'r') as prefsFile:
-            prefsData = prefsFile.read()
-            interface_scale_str = self.xmlCut(prefsData, 'interfaceScale').strip()
+            prefs_data = prefsFile.read()
+            interface_scale_str = self.xml_cut(prefs_data, 'interfaceScale').strip()
             if not interface_scale_str:
                 ini_file = ini.MyIniFile(utils.getModDir() + '/mxmeter.ini')
                 interface_scale_str = ini_file.get('interfaceScale')
@@ -151,4 +153,5 @@ class mxMeter:
 
         return interface_scale
 
-g_mxMeter = mxMeter()
+
+g_mxMeter = MxMeter()
