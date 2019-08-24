@@ -1,6 +1,7 @@
 # coding=utf-8
 #from API_v_1_0 import *
 from Ribbon import mxRibbon
+import ini
 
 API_VERSION = 'API_v1.0'
 MOD_NAME = 'mxMeter'
@@ -139,11 +140,15 @@ class mxMeter:
         with open(utils.getModDir() + '\\..\\..\\..\\..\\preferences.xml', 'r') as prefsFile:
             prefsData = prefsFile.read()
             interface_scale_str = self.xmlCut(prefsData, 'interfaceScale').strip()
+            if not interface_scale_str:
+                ini_file = ini.MyIniFile(utils.getModDir() + '/mxmeter.ini')
+                interface_scale_str = ini_file.get('interfaceScale')
             if interface_scale_str:
                 try:
                     interface_scale = float(interface_scale_str)
                 except ValueError:
                     pass
+
         return interface_scale
 
 g_mxMeter = mxMeter()
