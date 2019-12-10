@@ -47,9 +47,9 @@
 
 Присутствует ошибка учёта урона по кораблю который не находится в засвете.
 
-Ссылка для скачивания: https://wows.mv-smirnov.org/mxmeter_mod/mxmeter-0.7.4.0-75.zip
+Ссылка для скачивания: https://wows.mv-smirnov.org/ru/mxmeter/
 
-Исходные коды: https://bitbucket.org/qMBQx8GH/mxmeter
+Исходные коды: https://github.com/qMBQx8GH/mxmeter
 
 Установка:
 Скачать .zip архив и распаковать его в папку <Папка с игрой>\res_mods
