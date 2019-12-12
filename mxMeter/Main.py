@@ -108,21 +108,30 @@ class MxMeter:
             flash.call(MxMeter.UPDATE_PUK_INDICATOR, [MxMeter.PUK_FORMAT % self.puk_total])
 
     def on_battle_start(self):
+        # utils.logInfo('mxMeter', {
+        #     'event': 'onBattleStart',
+        # })
         self.init_state(battle_start=True)
         self.battle_started = True
         self.change_state()
 
     def on_battle_quit(self, arg):
+        # utils.logInfo('mxMeter', {
+        #     'event': 'onBattleQuit',
+        #     'arg': arg,
+        # })
         self.battle_started = False
         self.change_state()
 
     def on_sfm_event(self, event_name, event_data):
-        if event_name == 'window.show' and event_data['windowName'] == 'PostBattle':
-            print "mxMeter: onSFMEvent SHOW_PUK_INDICATOR"
+        # utils.logInfo('mxMeter', {
+        #     'event_name': event_name,
+        #     'event_data': event_data,
+        # })
+        if event_name == 'window.show' and event_data['windowName'] == 'ResultsScreen':
             self.post_battle_results = True
             self.change_state()
-        elif event_name == 'window.hide' and event_data['windowName'] == 'PostBattle':
-            print "mxMeter: onSFMEvent HIDE_PUK_INDICATOR"
+        elif event_name == 'window.hide' and event_data['windowName'] == 'ResultsScreen':
             self.post_battle_results = False
             self.change_state()
 
