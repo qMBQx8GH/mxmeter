@@ -48,8 +48,10 @@ for /f "tokens=*" %%i in ('git rev-list --count --first-parent HEAD') do (
 echo %REV%
 
 set VERS=nover
-for /f "tokens=2-5 delims=>." %%i in ('findstr /r "<version_name>" %GAME_FOLDER%\game_info.xml') do (
+set BUILD=0
+for /f "tokens=1-5 delims=>." %%i in ('call xpath.bat "%GAME_FOLDER%\game_info.xml" "//version[@name='client']/@installed"') do (
   set VERS=%%i.%%j.%%k.%%l
+  set BUILD=%%m
 )
 echo %VERS%
 
@@ -57,11 +59,11 @@ rmdir /s /q dist
 mkdir dist
 cd dist
 
-mkdir %VERS%
-cd %VERS%
+mkdir bin\%BUILD%\res_mods\%VERS%
+cd bin\%BUILD%\res_mods\%VERS%
 
 copy /y nul PnFModsLoader.py
 mkdir PnFMods
-xcopy ..\..\mxMeter PnFMods\mxMeter /i /e
-cd ..
-"C:\Program Files\7-Zip\7z.exe" a -r %DESTINATION%\mxmeter-%VERS%-%REV%.zip %VER%
+xcopy ..\..\..\..\..\mxMeter PnFMods\mxMeter /i /e
+cd ..\..\..\..
+"C:\Program Files\7-Zip\7z.exe" a -r %DESTINATION%\mxmeter-%VERS%.%BUILD%-%REV%.zip bin
