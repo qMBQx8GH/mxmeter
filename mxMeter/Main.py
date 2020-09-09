@@ -148,7 +148,7 @@ class MxMeter:
 
     def get_interface_scale(self):
         interface_scale = 1.0
-        with open(utils.getModDir() + '\\..\\..\\..\\..\\..\\..\\preferences.xml', 'r') as prefsFile:
+        with open(utils.getModDir() + '\\..\\..\\..\\..\\..\\preferences.xml', 'r') as prefsFile:
             prefs_data = prefsFile.read()
             interface_scale_str = self.xml_cut(prefs_data, 'interfaceScale').strip()
             if not interface_scale_str:
