@@ -59,11 +59,11 @@ rmdir /s /q dist
 mkdir dist
 cd dist
 
-mkdir bin\%BUILD%\res_mods\%VERS%
-cd bin\%BUILD%\res_mods\%VERS%
+mkdir bin\%BUILD%\res_mods
+cd bin\%BUILD%\res_mods
 
 copy /y nul PnFModsLoader.py
 mkdir PnFMods
-xcopy ..\..\..\..\..\mxMeter PnFMods\mxMeter /i /e
-cd ..\..\..\..
+xcopy ..\..\..\..\mxMeter PnFMods\mxMeter /i /e
+cd ..\..\..
 "C:\Program Files\7-Zip\7z.exe" a -r %DESTINATION%\mxmeter-%VERS%.%BUILD%-%REV%.zip bin
