@@ -40,6 +40,8 @@ class MxMeter:
         self.PUK_FORMAT = u"%0.2fПУК"
         self.NO_PUK = u"-"
         self.PUK_SCALE = 1.0  # use 100.0 to display in percent
+        self.FONT_SIZE = 18
+        self.FONT_COLOR = 0xfefefe
 
         self.battle_started = False
         self.post_battle_results = False
@@ -63,12 +65,12 @@ class MxMeter:
             interface_scale = self.get_interface_scale()
             x = int(round(-170 * interface_scale))
             y = int(round(0 * interface_scale))
-            font_size = int(round(18 * interface_scale))
+            font_size = int(round(self.FONT_SIZE * interface_scale))
             width = int(round(75 * interface_scale))
             if self.puk_total > 0:
-                flash.call(MxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, width, self.PUK_FORMAT % (self.puk_total * self.PUK_SCALE)])
+                flash.call(MxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, self.FONT_COLOR, width, self.PUK_FORMAT % (self.puk_total * self.PUK_SCALE)])
             else:
-                flash.call(MxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, width, self.NO_PUK])
+                flash.call(MxMeter.SHOW_PUK_INDICATOR, [x, y, font_size, self.FONT_COLOR, width, self.NO_PUK])
         else:
             flash.call(MxMeter.HIDE_PUK_INDICATOR, [])
 
@@ -98,6 +100,18 @@ class MxMeter:
             if PUK_SCALE:
                 try:
                     self.PUK_SCALE = float(PUK_SCALE)
+                except:
+                    None
+            FONT_SIZE = ini_file.get('FONT_SIZE')
+            if FONT_SIZE:
+                try:
+                    self.FONT_SIZE = int(FONT_SIZE)
+                except:
+                    None
+            FONT_COLOR = ini_file.get('FONT_COLOR')
+            if FONT_COLOR and len(FONT_COLOR) == 7:
+                try:
+                    self.FONT_COLOR = int(FONT_COLOR[5:7], 16) | int(FONT_COLOR[3:5], 16) << 8 | int(FONT_COLOR[1:3], 16) << 16
                 except:
                     None
 
