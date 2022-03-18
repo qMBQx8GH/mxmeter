@@ -63,7 +63,9 @@
 
 		private function onUpdatePukIndicator(label:String):void
 		{
-			this._puk_indicator.text = label;
+			if (this._puk_indicator) {
+				this._puk_indicator.text = label;
+			}
 		}
 
 		private function onHidePukIndicator():void
