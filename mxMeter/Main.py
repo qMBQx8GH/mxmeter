@@ -135,7 +135,7 @@ class MxMeter:
             puk = float(damage) / float(self.players_health[victim_id])
             self.add_puk(puk)
 
-    def on_got_ribbon(self, ribbon_id):
+    def on_got_ribbon(self, ribbon_id, a_value):
         ribbon = MxRibbon(ribbon_id)
         puk = ribbon.getPuk()
         self.add_puk(puk)
