@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Make mod WW",
+            "type": "python",
+            "request": "launch",
+            "program": "make_mod.py",
+            "args": ["build-ww.ini"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Make mod MK",
+            "type": "python",
+            "request": "launch",
+            "program": "make_mod.py",
+            "args": ["build-mk.ini"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
