@@ -8,7 +8,6 @@ import xml.etree.ElementTree as ET
 import configparser
 import zipfile
 import shutil
-from PIL import Image
 
 config = configparser.ConfigParser()
 config.read(sys.argv[1])
@@ -44,21 +43,18 @@ subprocess.run([
 ], shell=True, check=True)
 
 # Put ini file
-shutil.copy2('mxmeter-' + config['Destination']['suffix'] + '.ini', os.path.join('mxMeter', 'mxmeter.ini'))
+shutil.copy2('mxmeter.ini', os.path.join('mxMeter', 'mxmeter.ini'))
+
+target_dir = config['Destination']['folder']
+target_suffix = config['Destination']['suffix']
+target_file = 'mxmeter-' + version + '-' + target_suffix + '.zip'
+zip_archive = os.path.join(target_dir, target_file)
+print(zip_archive)
 
 # Make zip archive
 files = glob.glob(os.path.join('mxMeter', '**'), recursive=True)
-zip_archive = os.path.join(dist_dir, 'mxmeter.zip')
 with zipfile.ZipFile(zip_archive, 'w', zipfile.ZIP_DEFLATED) as zipf:
     for file in files:
         if os.path.isfile(file):
             zipf.write(file, os.path.join('PnFMods', file))
     zipf.write('PnFModsLoader.py', 'PnFModsLoader.py')
-
-# Copy archive
-target_dir = config['Destination']['folder']
-target_suffix = config['Destination']['suffix']
-target_file = 'mxmeter-' + version + '-' + target_suffix + '.zip'
-target = os.path.join(target_dir, target_file)
-print(target)
-shutil.copy2(zip_archive, target)

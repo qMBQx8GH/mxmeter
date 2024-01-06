@@ -5,20 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Make mod WW",
+            "name": "Make mod",
             "type": "python",
             "request": "launch",
             "program": "make_mod.py",
-            "args": ["build-ww.ini"],
-            "console": "integratedTerminal",
-            "justMyCode": true
-        },
-        {
-            "name": "Make mod MK",
-            "type": "python",
-            "request": "launch",
-            "program": "make_mod.py",
-            "args": ["build-mk.ini"],
+            "args": ["build.ini"],
             "console": "integratedTerminal",
             "justMyCode": true
         }
