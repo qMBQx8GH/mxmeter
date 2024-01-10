@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "make_mod.py",
-            "args": ["build.ini"],
+            "args": ["build.ini.dist"],
             "console": "integratedTerminal",
             "justMyCode": true
         }

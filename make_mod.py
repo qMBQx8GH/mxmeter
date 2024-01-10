@@ -42,9 +42,6 @@ subprocess.run([
     "C:\\Program Files (x86)\\FlashDevelop\\Library",
 ], shell=True, check=True)
 
-# Put ini file
-shutil.copy2('mxmeter.ini', os.path.join('mxMeter', 'mxmeter.ini'))
-
 target_dir = config['Destination']['folder']
 target_suffix = config['Destination']['suffix']
 target_file = 'mxmeter-' + version + '-' + target_suffix + '.zip'
