@@ -56,3 +56,4 @@ with zipfile.ZipFile(zip_archive, 'w', zipfile.ZIP_DEFLATED) as zipf:
             zipf.write(file, os.path.join('PnFMods', file))
     zipf.write('PnFModsLoader.py', 'PnFModsLoader.py')
 
+
