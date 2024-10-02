@@ -57,5 +57,6 @@ with zipfile.ZipFile(zip_archive, 'w', zipfile.ZIP_DEFLATED) as zipf:
     for file in files:
         if os.path.isfile(file):
 
+
             zipf.write(file, os.path.join('PnFMods', file))
     zipf.write('PnFModsLoader.py', 'PnFModsLoader.py')
