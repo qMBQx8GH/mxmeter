@@ -63,8 +63,8 @@ class MxMeter:
     def change_state(self):
         if self.battle_started or self.post_battle_results:
             interface_scale = self.get_interface_scale()
-            x = int(round(-170 * interface_scale))
-            y = int(round(0 * interface_scale))
+            x = int(round(-210 * interface_scale))
+            y = int(round(8 * interface_scale))
             font_size = int(round(self.FONT_SIZE * interface_scale))
             width = int(round(75 * interface_scale))
             if self.puk_total > 0:
