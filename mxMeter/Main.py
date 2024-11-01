@@ -42,6 +42,8 @@ class MxMeter:
         self.PUK_SCALE = 1.0  # use 100.0 to display in percent
         self.FONT_SIZE = 18
         self.FONT_COLOR = 0xfefefe
+        self.POSITION_X = -174
+        self.POSITION_Y = 6
 
         self.battle_started = False
         self.post_battle_results = False
@@ -63,8 +65,8 @@ class MxMeter:
     def change_state(self):
         if self.battle_started or self.post_battle_results:
             interface_scale = self.get_interface_scale()
-            x = int(round(-210 * interface_scale))
-            y = int(round(8 * interface_scale))
+            x = int(round(self.POSITION_X * interface_scale))
+            y = int(round(self.POSITION_Y * interface_scale))
             font_size = int(round(self.FONT_SIZE * interface_scale))
             width = int(round(75 * interface_scale))
             if self.puk_total > 0:
@@ -112,6 +114,18 @@ class MxMeter:
             if FONT_COLOR and len(FONT_COLOR) == 7:
                 try:
                     self.FONT_COLOR = int(FONT_COLOR[5:7], 16) | int(FONT_COLOR[3:5], 16) << 8 | int(FONT_COLOR[1:3], 16) << 16
+                except:
+                    None
+            POSITION_X = ini_file.get('POSITION_X')
+            if POSITION_X:
+                try:
+                    self.POSITION_X = int(POSITION_X)
+                except:
+                    None
+            POSITION_Y = ini_file.get('POSITION_Y')
+            if POSITION_Y:
+                try:
+                    self.POSITION_Y = int(POSITION_Y)
                 except:
                     None
 
