@@ -42,8 +42,8 @@ class MxMeter:
         self.PUK_SCALE = 1.0  # use 100.0 to display in percent
         self.FONT_SIZE = 18
         self.FONT_COLOR = 0xfefefe
-        self.POSITION_X = -174
-        self.POSITION_Y = 6
+        self.POSITION_X = -176
+        self.POSITION_Y = 4
 
         self.battle_started = False
         self.post_battle_results = False
