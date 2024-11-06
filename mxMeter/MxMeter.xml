@@ -1,0 +1,30 @@
+<ui>
+	<block className="MxMeter">
+		<bind name="controller" value="'lesta.api.UbModController'"/>
+		<bind name="watch" value="'ub_print'; mx_print"/>
+		<bind name="watch" value="'ub_visible'; mx_visible"/>
+		<bind name="visible" value="ub_visible"/>
+		<bind name="firstEntityDH" value="'MxMeter_stageEntity'; CC.stage"/>
+		<bind name="watchDH" value="'MxMeter_stage'; ['MxMeter_stageEntity.stage.evStageSizeChanged']; MxMeter_stageEntity.stage"/>
+		<bind name="left" value="MxMeter_stage.width - 300"/> <!-- timer + width + space + width = 176 + 42 + 12 + 80 = 310 -->
+	    <bind name="top" value="5px"/>
+		<bind name="width" value="80px"/>
+		<block type="text">
+			<style>
+				<position value="absolute"/>
+				<textAlign value="right"/>
+
+				<fontSize value="17"/>
+				<fontFamily value="$WWSDefaultFontBold"/>
+				<textColor value="0xEEEEEE" />
+				<dropShadowFilter value="1 90 0x08222a 0.5 2.0 2.0 1.0 2"/>
+
+				<mouseEnabled value="false"/>
+				<mouseChildren value="false"/>
+				<selectable value="false"/>
+				<multiline value="false"/>
+			</style>
+			<bind name="text" value="ub_print"/>
+		</block>
+	</block>
+</ui>

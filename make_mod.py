@@ -38,6 +38,7 @@ subprocess.run([
     "4.6.0; 3.1",
     "-compiler",
     "C:\\src\\flex_sdk_4.6",
+    "-notrace",
     "-library",
     "C:\\Program Files (x86)\\FlashDevelop\\Library",
 ], shell=True, check=True)
