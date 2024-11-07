@@ -6,13 +6,13 @@
 		<bind name="visible" value="ub_visible"/>
 		<bind name="firstEntityDH" value="'MxMeter_stageEntity'; CC.stage"/>
 		<bind name="watchDH" value="'MxMeter_stage'; ['MxMeter_stageEntity.stage.evStageSizeChanged']; MxMeter_stageEntity.stage"/>
-		<bind name="left" value="MxMeter_stage.width - 300"/> <!-- timer + width + space + width = 176 + 42 + 12 + 80 = 310 -->
+		<bind name="left" value="MxMeter_stage.width - 174"/> <!-- timer + width + space + width = 176 + 42 + 12 + 80 = 310 -->
 	    <bind name="top" value="5px"/>
 		<bind name="width" value="80px"/>
 		<block type="text">
 			<style>
 				<position value="absolute"/>
-				<textAlign value="right"/>
+				<textAlign value="left"/>
 
 				<fontSize value="17"/>
 				<fontFamily value="$WWSDefaultFontBold"/>

@@ -57,7 +57,7 @@ package
          param1[expr] = expr11;
          param2[expr] = new <String>["MxMeter_stageEntity"];
 
-         expr = "MxMeter_stage.width - 300";
+         expr = "MxMeter_stage.width - 174";
          param1[expr] = expr12;
          param2[expr] = new <String>["MxMeter_stage"];
 
@@ -131,7 +131,7 @@ package
 
       public static function expr12(param1:Object) : *
       {
-         return param1.getPropertySecure("MxMeter_stage","width") - 300;
+         return param1.getPropertySecure("MxMeter_stage","width") - 174;
       }
 
       public static function expr13(param1:Object) : *
