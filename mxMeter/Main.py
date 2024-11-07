@@ -42,7 +42,7 @@ class MxMeter:
         self.players_health = {}
         self.setup_events()
         self.apply_ini_settings()
-        flash.setUbMarkup('MxMeter.xml', 'Main.swf', 'MxMeter')
+        flash.setUbMarkup('MxMeter.xml', 'MxMeter.swf', 'MxMeter')
 
     def setup_events(self):
         events.onReceiveShellInfo(self.on_receive_shell_info)
