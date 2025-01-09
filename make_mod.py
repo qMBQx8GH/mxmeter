@@ -38,9 +38,13 @@ subprocess.run([
     "4.6.0; 3.1",
     "-compiler",
     "C:\\src\\flex_sdk_4.6",
+    "-notrace",
     "-library",
     "C:\\Program Files (x86)\\FlashDevelop\\Library",
 ], shell=True, check=True)
+
+# Put ini file
+shutil.copy2('mxmeter.ini', os.path.join('mxMeter', 'mxmeter.ini'))
 
 target_dir = config['Destination']['folder']
 target_suffix = config['Destination']['suffix']
@@ -55,5 +59,3 @@ with zipfile.ZipFile(zip_archive, 'w', zipfile.ZIP_DEFLATED) as zipf:
         if os.path.isfile(file):
             zipf.write(file, os.path.join('PnFMods', file))
     zipf.write('PnFModsLoader.py', 'PnFModsLoader.py')
-
-
