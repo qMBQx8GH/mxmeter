@@ -35,6 +35,7 @@ class MxMeter:
         self.PUK_FORMAT = u"%0.2fПУК"
         self.NO_PUK = u"-"
         self.PUK_SCALE = 1.0  # use 100.0 to display in percent
+        self.POSITION_X = -174
 
         self.battle_started = False
         self.post_battle_results = False
@@ -66,10 +67,18 @@ class MxMeter:
             NO_PUK = ini_file.get('NO_PUK')
             if NO_PUK:
                 self.NO_PUK = NO_PUK
+
             PUK_SCALE = ini_file.get('PUK_SCALE')
             if PUK_SCALE:
                 try:
                     self.PUK_SCALE = float(PUK_SCALE)
+                except:
+                    None
+
+            POSITION_X = ini_file.get('POSITION_X')
+            if POSITION_X:
+                try:
+                    self.POSITION_X = int(float(POSITION_X))
                 except:
                     None
 
@@ -83,11 +92,23 @@ class MxMeter:
 
     def update_ui(self):
         if not self.battle_started and not self.post_battle_results:
-            flash.setUbData({'mx_visible':0, 'mx_print':''})
+            flash.setUbData({
+                'mx_visible': 0,
+                'mx_print': '',
+                'mx_position_x': self.POSITION_X,
+            })
         elif self.puk_total > 0.0:
-            flash.setUbData({'mx_visible':1, 'mx_print':self.PUK_FORMAT % (self.puk_total * self.PUK_SCALE)})
+            flash.setUbData({
+                'mx_visible': 1,
+                'mx_print': self.PUK_FORMAT % (self.puk_total * self.PUK_SCALE),
+                'mx_position_x': self.POSITION_X,
+            })
         else:
-            flash.setUbData({'mx_visible':1, 'mx_print':self.NO_PUK})
+            flash.setUbData({
+                'mx_visible': 1,
+                'mx_print': self.NO_PUK,
+                'mx_position_x': self.POSITION_X,
+            })
 
     def add_puk(self, puk):
         self.puk_total += puk

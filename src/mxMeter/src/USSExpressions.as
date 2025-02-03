@@ -57,9 +57,9 @@ package
          param1[expr] = expr11;
          param2[expr] = new <String>["MxMeter_stageEntity"];
 
-         expr = "MxMeter_stage.width - 174";
+         expr = "ub_position_x < 0 ? MxMeter_stage.width + ub_position_x : ub_position_x";
          param1[expr] = expr12;
-         param2[expr] = new <String>["MxMeter_stage"];
+         param2[expr] = new <String>["MxMeter_stage", "ub_position_x"];
 
          expr = "5px";
          param1[expr] = expr13;
@@ -72,6 +72,14 @@ package
          expr = "ub_print";
          param1[expr] = expr15;
          param2[expr] = new <String>["ub_print"];
+
+         expr = "\'ub_position_x\'";
+         param1[expr] = expr16;
+         param2[expr] = null;
+
+         expr = " mx_position_x";
+         param1[expr] = expr17;
+         param2[expr] = new <String>["mx_position_x"];
       }
 
       public static function expr01(param1:Object) : *
@@ -131,7 +139,9 @@ package
 
       public static function expr12(param1:Object) : *
       {
-         return param1.getPropertySecure("MxMeter_stage","width") - 174;
+         var ub_position_x:int = 0;
+         ub_position_x = !!param1.ub_position_x ? param1.ub_position_x : -174;
+         return ub_position_x < 0 ? param1.getPropertySecure("MxMeter_stage","width") + ub_position_x : ub_position_x;
       }
 
       public static function expr13(param1:Object) : *
@@ -147,6 +157,16 @@ package
       public static function expr15(param1:Object) : *
       {
          return param1.ub_print;
+      }
+
+      public static function expr16(param1:Object) : *
+      {
+         return "ub_position_x";
+      }
+
+      public static function expr17(param1:Object) : *
+      {
+         return param1.mx_position_x;
       }
    }
 }

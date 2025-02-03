@@ -3,11 +3,12 @@
 		<bind name="controller" value="'lesta.api.UbModController'"/>
 		<bind name="watch" value="'ub_print'; mx_print"/>
 		<bind name="watch" value="'ub_visible'; mx_visible"/>
+		<bind name="watch" value="'ub_position_x'; mx_position_x"/>
 		<bind name="visible" value="ub_visible"/>
 		<bind name="firstEntityDH" value="'MxMeter_stageEntity'; CC.stage"/>
 		<bind name="watchDH" value="'MxMeter_stage'; ['MxMeter_stageEntity.stage.evStageSizeChanged']; MxMeter_stageEntity.stage"/>
-		<bind name="left" value="MxMeter_stage.width - 174"/> <!-- timer + width + space + width = 176 + 42 + 12 + 80 = 310 -->
-	    <bind name="top" value="5px"/>
+		<bind name="left" value="ub_position_x &lt; 0 ? MxMeter_stage.width + ub_position_x : ub_position_x"/>
+		<bind name="top" value="5px"/>
 		<bind name="width" value="80px"/>
 		<block type="text">
 			<style>
