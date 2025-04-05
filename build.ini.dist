@@ -1,5 +1,7 @@
 [Game]
 folder=C:\Games\World_of_Warships
+[ModSDK]
+folder=C:\src\ModSDK
 [FlashDevelop]
 project=src\mxMeter\mxMeter.as3proj
 [Destination]

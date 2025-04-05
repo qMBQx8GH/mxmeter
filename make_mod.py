@@ -24,6 +24,12 @@ base_dir = os.path.abspath(os.path.dirname(__file__))
 dist_dir = os.path.join(base_dir, 'dist')
 os.makedirs(dist_dir, exist_ok=True)
 
+# copy wows_library.swc from NodSDK
+shutil.copy2(
+    os.path.join(config['ModSDK']['folder'], 'as3_library', 'wows_library.swc'),
+    os.path.join('src', 'mxMeter', 'lib', 'wows_library.swc')
+)
+
 # Clean up dist folder
 files = glob.glob(os.path.join(dist_dir, '*'))
 for f in files:
