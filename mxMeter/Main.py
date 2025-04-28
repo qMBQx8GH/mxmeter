@@ -7,7 +7,7 @@ API_VERSION = 'API_v1.0'
 MOD_NAME = 'mxMeter'
 
 """
-https://forum.worldofwarships.ru/topic/68750-изменения-экономики-до-и-после-0512/
+https://forum.korabli.su/topic/68750-
 
 Учитываются:
 Урон ГК, ПМК, Торпед и Бомб
