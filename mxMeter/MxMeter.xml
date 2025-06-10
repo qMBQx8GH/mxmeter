@@ -16,7 +16,7 @@
 				<textAlign value="left"/>
 
 				<fontSize value="17"/>
-				<fontFamily value="$WWSDefaultFontBold"/>
+				<fontFamily value="$DefaultFontBold"/>
 				<textColor value="0xEEEEEE" />
 				<dropShadowFilter value="1 90 0x08222a 0.5 2.0 2.0 1.0 2"/>
 
