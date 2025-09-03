@@ -57,7 +57,7 @@
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
-    <element path="lib\wows_library.swc" />
+    <element path="lib\mk_library.swc" />
   </externalLibraryPaths>
   <!-- Runtime Shared Libraries -->
   <rslPaths>
